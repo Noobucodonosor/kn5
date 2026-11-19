@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KN5 — I tuoi video, finalmente leggibili</title>
+  <meta name="description" content="Trasforma video YouTube e Instagram in trascrizioni verbatim, OCR visivo e note Markdown Obsidian-friendly con Gemini Vertex AI.">
+  <meta property="og:title" content="KN5 — I tuoi video, finalmente leggibili">
+  <meta property="og:description" content="Video, trascrizione verbatim, OCR visivo e concetti in un unico spazio di lavoro.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/Noobucodonosor/kn5/main/docs/preview/social-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<main>
+  <header class="topbar">
+    <a class="brand" href="./"><span>K</span>KN5</a>
+    <label class="search">⌕<input id="search-input" type="search" placeholder="Cerca nella conoscenza…"><kbd>⌘ K</kbd></label>
+    <a class="avatar" href="https://github.com/Noobucodonosor/kn5" target="_blank" rel="noopener" title="Apri repository GitHub" style="display:grid;place-items:center;text-decoration:none">DB</a>
+  </header>
+  <div class="workspace">
+    <aside class="sidebar">
+      <button class="new" id="btn-new" type="button">＋ Nuova analisi</button>
+      <nav>
+        <p class="eyebrow">Spazio di lavoro</p>
+        <a class="on" href="#libreria">◫ Libreria <b>128</b></a>
+        <a href="#libreria">◷ In elaborazione <b>0</b></a>
+        <a href="#concetti">✦ Concetti</a>
+      </nav>
+      <nav>
+        <p class="eyebrow">Raccolte</p>
+        <a href="#libreria"><i class="coral"></i>Matematica <b>8</b></a>
+        <a href="#libreria"><i class="violet"></i>Marketing &amp; SEO <b>96</b></a>
+        <a href="#libreria"><i class="mint"></i>Web design <b>24</b></a>
+      </nav>
+      <div class="budget">
+        <div><span>Budget mensile</span><b>$4,82 / $20</b></div>
+        <em><i></i></em>
+        <small>24% utilizzato · Sentinella attiva</small>
+      </div>
+    </aside>
+
+    <section class="library" id="libreria">
+      <div class="libHead">
+        <div>
+          <p class="eyebrow">Libreria</p>
+          <h1>I tuoi video,<br>finalmente leggibili.</h1>
+        </div>
+        <small>128 elementi</small>
+      </div>
+      <div class="ingest">
+        <span>↗</span>
+        <input id="ingest" type="url" placeholder="Incolla un link YouTube o Instagram">
+        <button id="btn-analyze" type="button">Analizza</button>
+      </div>
+      <div id="demo-notice" class="demo-note" style="display:none">
+        <b>Anteprima interattiva pubblica:</b> l'elaborazione live con Gemini Vertex AI richiede il backend KN5 configurato con credenziali GCP. Esplora liberamente il documento completo, la trascrizione sincronizzata e l'OCR qui a fianco oppure consulta il <a href="https://github.com/Noobucodonosor/kn5" target="_blank" rel="noopener" style="color:#23483c;font-weight:700">repository GitHub</a>.
+      </div>
+      <div class="filters" id="filters">
+        <button class="on" data-filter="all" type="button">Tutti</button>
+        <button data-filter="youtube" type="button">YouTube</button>
+        <button data-filter="instagram" type="button">Instagram</button>
+        <button data-filter="long" type="button">Video lunghi</button>
+      </div>
+      <div id="items-list"></div>
+    </section>
+
+    <article class="reader">
+      <div class="readerHead">
+        <div>
+          <p class="eyebrow">Matematica · 26 aprile 2026</p>
+          <h2>Formula di Newton–Leibniz per il calcolo degli integrali definiti</h2>
+        </div>
+        <a href="https://www.youtube.com/watch?v=1OooVY-k1Dc" target="_blank" rel="noopener" title="Apri video originale">↗</a>
+      </div>
+      <div class="meta">
+        <span>Tonino Filardi</span>
+        <span>8 min</span>
+        <span>Italiano</span>
+        <span>✓ Documento completo</span>
+      </div>
+      <div class="tabs" id="tabs">
+        <button class="on" data-tab="doc" type="button">Documento completo</button>
+        <button data-tab="transcript" type="button">Trascrizione verbatim</button>
+        <button data-tab="visual" type="button">OCR + visivo</button>
+      </div>
+      <div id="video-wrap" class="video sourceVideo" style="display:none">
+        <iframe id="yt-frame" src="https://www.youtube.com/embed/1OooVY-k1Dc?start=0" title="Formula di Newton-Leibniz" allowfullscreen></iframe>
+      </div>
+      <div id="tab-content"></div>
+    </article>
+  </div>
+</main>
+<script>
+const segments = [
+  ['00:00', 0, 'Ciao a tutti. Oggi vediamo la formula di Newton–Leibniz, che ci servirà per risolvere un integrale definito.'],
+  ['00:25', 25, 'Noi sappiamo che la derivata della funzione integrale è uguale alla funzione integranda.'],
+  ['01:41', 101, "La funzione integranda è data dalla derivata della primitiva. Detta φ(x) la primitiva di f(x), φ'(x) deve essere uguale a f(x)."],
+  ['02:51', 171, 'Due funzioni che hanno la stessa derivata differiscono per una costante additiva.'],
+  ['04:37', 277, 'Quando i due estremi di integrazione coincidono, l’integrale si annulla.'],
+  ['06:47', 407, 'Otteniamo così la formula di Newton–Leibniz: l’integrale da a a b è uguale a φ(b) meno φ(a).'],
+  ['07:39', 459, 'La formula ci permette di calcolare direttamente un integrale definito attraverso una qualunque primitiva.']
+];
+
+const items = [
+  { title: 'Formula di Newton–Leibniz', meta: 'YouTube · Tonino Filardi', dur: '08:34', src: 'youtube', long: false },
+  { title: 'Legge di Ohm: dimostrazione', meta: 'YouTube · Tonino Filardi', dur: '11:20', src: 'youtube', long: true },
+  { title: 'SEO nell’era dell’AI', meta: 'Instagram · Edward Builds', dur: '01:26', src: 'instagram', long: false }
+];
+
+const llmReadyMarkdown = `# Formula di Newton–Leibniz per il calcolo degli integrali definiti
+
+## Obiettivo del tutorial
+Derivare la formula che permette di calcolare un integrale definito attraverso una primitiva della funzione integranda.
+
+## Prerequisito
+Il teorema fondamentale del calcolo integrale: se F è la funzione integrale di f, allora F′(x) = f(x).
+
+## Procedura completa
+1. Si definisce φ(x) come una qualunque primitiva di f(x), quindi φ′(x) = f(x).
+2. F(x) e φ(x) hanno la stessa derivata. Due funzioni con la stessa derivata differiscono per una costante: F(x) = φ(x) + k.
+3. Si valuta la relazione in x = a. Per definizione F(a) = ∫ₐᵃ f(t)dt = 0.
+4. Da 0 = φ(a) + k si ricava k = −φ(a).
+5. Si sostituisce la costante: F(x) = φ(x) − φ(a).
+6. Si valuta in x = b: F(b) = φ(b) − φ(a).
+7. Poiché F(b) = ∫ₐᵇ f(t)dt, si ottiene ∫ₐᵇ f(x)dx = φ(b) − φ(a).
+
+## Risultato
+La formula di Newton–Leibniz collega integrale definito e integrale indefinito. Per calcolare ∫ₐᵇ f(x)dx si trova una qualunque primitiva φ di f e si calcola φ(b) − φ(a).
+
+## Informazioni estratte dalla componente visiva
+Il docente scrive progressivamente sulla lavagna: F′(x) = f(x); φ′(x) = f(x); F(x) = φ(x) + k; F(a) = ∫ₐᵃ f(x)dx = 0; k = −φ(a); ∫ₐᵇ f(x)dx = φ(b) − φ(a).
+
+## Concetti chiave
+- Teorema fondamentale del calcolo integrale
+- Funzione integrale e funzione primitiva
+- Costante di integrazione
+- Formula di Newton–Leibniz
+
+## Fonte
+https://www.youtube.com/watch?v=1OooVY-k1Dc`;
+
+let state = { query: '', filter: 'all', tab: 'doc', activeSeg: '00:00' };
+
+function renderItems() {
+  const q = state.query.toLowerCase();
+  const list = items.filter(i => {
+    if (q && !i.title.toLowerCase().includes(q) && !i.meta.toLowerCase().includes(q)) return false;
+    if (state.filter === 'youtube' && i.src !== 'youtube') return false;
+    if (state.filter === 'instagram' && i.src !== 'instagram') return false;
+    if (state.filter === 'long' && !i.long) return false;
+    return true;
+  });
+  const container = document.getElementById('items-list');
+  container.innerHTML = list.map((i, idx) => `
+    <button class="item ${idx === 0 ? 'active' : ''}" type="button">
+      <span class="thumb"><i>▶</i><small>${i.dur}</small></span>
+      <span class="itemcopy"><strong>${i.title}</strong><small>${i.meta}</small></span>
+      <b>›</b>
+    </button>
+  `).join('');
+}
+
+function renderTab() {
+  const videoWrap = document.getElementById('video-wrap');
+  const content = document.getElementById('tab-content');
+  videoWrap.style.display = state.tab === 'doc' ? 'none' : 'block';
+
+  if (state.tab === 'doc') {
+    content.innerHTML = `
+      <section class="fullDocument">
+        <div class="documentTools">
+          <span><b>OUTPUT KN5</b><small>Markdown strutturato · pronto per LLM</small></span>
+          <div>
+            <button id="btn-copy" type="button">Copia tutto</button>
+            <button id="btn-dl" type="button">Scarica .md</button>
+          </div>
+        </div>
+        <h3>Obiettivo del tutorial</h3>
+        <p>Derivare la formula che permette di calcolare un integrale definito attraverso una primitiva della funzione integranda.</p>
+        <h3>Prerequisito</h3>
+        <p>Il teorema fondamentale del calcolo integrale: se <i>F</i> è la funzione integrale di <i>f</i>, allora <b>F′(x) = f(x)</b>.</p>
+        <h3>Procedura completa</h3>
+        <ol>
+          <li>Si definisce <b>φ(x)</b> come una qualunque primitiva di f(x), quindi φ′(x) = f(x).</li>
+          <li>F(x) e φ(x) hanno la stessa derivata. Differiscono quindi per una costante: <b>F(x) = φ(x) + k</b>.</li>
+          <li>Si valuta in x = a. Per definizione <b>F(a) = ∫ₐᵃ f(t)dt = 0</b>.</li>
+          <li>Da 0 = φ(a) + k si ricava <b>k = −φ(a)</b>.</li>
+          <li>Si sostituisce la costante: <b>F(x) = φ(x) − φ(a)</b>.</li>
+          <li>Si valuta in x = b e si ottiene <b>∫ₐᵇ f(x)dx = φ(b) − φ(a)</b>.</li>
+        </ol>
+        <div class="resultBox">
+          <small>RISULTATO OPERATIVO</small>
+          <strong>∫ₐᵇ f(x)dx = φ(b) − φ(a)</strong>
+          <p>Trova una qualunque primitiva e calcolane la differenza agli estremi. La costante additiva non influenza il risultato.</p>
+        </div>
+        <h3>Informazioni ricavate dal video</h3>
+        <p>La spiegazione orale stabilisce il collegamento logico tra derivazione e integrazione. La lavagna conferma ogni trasformazione tramite le formule scritte progressivamente. Il documento combina entrambe le fonti, senza limitarsi alla sola trascrizione.</p>
+        <h3 id="concetti">Concetti chiave</h3>
+        <div class="docTags">
+          <span>Teorema fondamentale</span>
+          <span>Funzione primitiva</span>
+          <span>Integrale definito</span>
+          <span>Costante di integrazione</span>
+        </div>
+      </section>`;
+    document.getElementById('btn-copy').onclick = async (e) => {
+      await navigator.clipboard.writeText(llmReadyMarkdown);
+      e.target.textContent = '✓ Copiato';
+      setTimeout(() => { e.target.textContent = 'Copia tutto'; }, 1800);
+    };
+    document.getElementById('btn-dl').onclick = () => {
+      const blob = new Blob([llmReadyMarkdown], { type: 'text/markdown' });
+      const href = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = href; a.download = 'newton-leibniz-kn5.md'; a.click();
+      URL.revokeObjectURL(href);
+    };
+  } else if (state.tab === 'transcript') {
+    content.innerHTML = `
+      <div class="transcript">
+        <p class="sourceNote">Testo letterale dell’audio, conservato separatamente dal documento elaborato. Clicca un timestamp per saltare al punto nel video.</p>
+        ${segments.map(s => `
+          <button class="${state.activeSeg === s[0] ? 'on' : ''}" data-ts="${s[0]}" data-sec="${s[1]}" type="button">
+            <time>${s[0]}</time><p>${s[2]}</p>
+          </button>
+        `).join('')}
+      </div>`;
+    content.querySelectorAll('button[data-ts]').forEach(btn => {
+      btn.onclick = () => {
+        state.activeSeg = btn.dataset.ts;
+        document.getElementById('yt-frame').src = `https://www.youtube.com/embed/1OooVY-k1Dc?start=${btn.dataset.sec}`;
+        renderTab();
+      };
+    });
+  } else {
+    content.innerHTML = `
+      <section class="visualSource">
+        <p class="sourceNote">Informazioni presenti nel video ma non necessariamente pronunciate.</p>
+        <h3>Testo rilevato sulla lavagna</h3>
+        <code>F′(x) = f(x)<br>φ′(x) = f(x)<br>F(x) = φ(x) + k<br>F(a) = ∫ₐᵃ f(x)dx = 0<br>k = −φ(a)<br>∫ₐᵇ f(x)dx = φ(b) − φ(a)</code>
+        <h3>Descrizione visiva</h3>
+        <p>Il docente si trova davanti a una lavagna nera e costruisce la dimostrazione cancellando e riscrivendo le formule. La sequenza visiva rende espliciti i passaggi algebrici e l’ordine della derivazione.</p>
+      </section>`;
+  }
+}
+
+document.getElementById('search-input').oninput = (e) => { state.query = e.target.value; renderItems(); };
+document.getElementById('btn-new').onclick = () => document.getElementById('ingest').focus();
+document.getElementById('btn-analyze').onclick = () => {
+  document.getElementById('demo-notice').style.display = 'block';
+};
+document.getElementById('ingest').onkeydown = (e) => {
+  if (e.key === 'Enter') document.getElementById('demo-notice').style.display = 'block';
+};
+document.getElementById('filters').querySelectorAll('button').forEach(btn => {
+  btn.onclick = () => {
+    state.filter = btn.dataset.filter;
+    document.querySelectorAll('#filters button').forEach(b => b.classList.toggle('on', b === btn));
+    renderItems();
+  };
+});
+document.getElementById('tabs').querySelectorAll('button').forEach(btn => {
+  btn.onclick = () => {
+    state.tab = btn.dataset.tab;
+    document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b === btn));
+    renderTab();
+  };
+});
+
+renderItems();
+renderTab();
+</script>
+</body>
+</html>
