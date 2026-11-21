@@ -1,0 +1,38 @@
+# .gcloudignore
+# Prevent uploading heavy local environments and temporary folders to Google Cloud Build
+
+.git
+.gitignore
+.gcloudignore
+.cursorrules
+
+# Python directories
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Application data
+temp/
+output/
+download_cache.json
+tg_video/
+tg_frames/
+tg_output/
+
+# Secrets & config (forniti a runtime via Cloud Run env/Secret Manager, NON nell'immagine)
+.env
+.secrets/
+gcp-key.json
+ig_session_*
+
+# Dati locali pesanti non necessari nel container
+library/
+logs/
+kb/
+.obsidian/
+kn5-site/
+*.mp4
+*.mp3
+*.webp

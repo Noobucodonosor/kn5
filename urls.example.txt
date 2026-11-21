@@ -1,0 +1,3 @@
+# Un URL per riga. Copia questo file in urls.txt per i run bulk locali.
+https://www.youtube.com/watch?v=VIDEO_ID
+https://www.instagram.com/p/SHORTCODE/

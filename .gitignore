@@ -1,0 +1,42 @@
+# Ambienti, cache e build Python
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Configurazione locale e segreti
+.env
+.env.*
+!.env.example
+.secrets/
+gcp-key.json
+ig_session_*
+cookies.txt
+
+# Dati e output generati dall'applicazione
+temp/
+output/
+logs/
+library/
+kb/raw/
+kb/output/
+urls.txt
+
+# Stato locale degli strumenti
+.obsidian/
+.claude/
+*.canvas
+.DS_Store
+
+# Media scaricati o intermedi
+*.webp
+*.mp4
+*.mp3
+*.jpg
+
+# Frontend Sites: repository Git indipendente
+kn5-site/

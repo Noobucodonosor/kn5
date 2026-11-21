@@ -1,0 +1,20 @@
+{
+  "case_id": "replace-with-case-id",
+  "reviewer": "",
+  "reviewed_at": "",
+  "source_watched_in_full": false,
+  "scores": {
+    "fidelity": 0,
+    "functional_completeness": 0,
+    "order_and_causality": 0,
+    "genre_fit": 0,
+    "source_integration": 0,
+    "auditability": 0
+  },
+  "automatic_gate_passed": false,
+  "total": 0,
+  "accepted": false,
+  "missing_information": [],
+  "unsupported_claims": [],
+  "notes": ""
+}

@@ -1,0 +1,94 @@
+{
+  "version": "1.0",
+  "cases": [
+    {
+      "id": "youtube_newton_leibniz_tutorial",
+      "enabled": true,
+      "source_url": "https://www.youtube.com/watch?v=1OooVY-k1Dc",
+      "reference_artifact": "library/profiles/tonino-filardi/2026-04-26_formula-di-newton-leibniz-per-il-calcolo-degli-int.md",
+      "reference_status": "derived_from_legacy_output_not_source_verified",
+      "expected_content_kind": "tutorial",
+      "min_document_chars": 900,
+      "require_transcript": true,
+      "require_visual": true,
+      "concepts": [
+        {"id": "prerequisite", "any_of": ["teorema fondamentale del calcolo integrale"]},
+        {"id": "integral_function", "any_of": ["F'(x) = f(x)", "F′(x) = f(x)"]},
+        {"id": "primitive", "any_of": ["primitiva", "φ'(x) = f(x)", "phi'(x) = f(x)"]},
+        {"id": "constant", "any_of": ["k = -φ(a)", "k = -phi(a)", "costante"]},
+        {"id": "final_formula", "any_of": ["φ(b) - φ(a)", "phi(b) - phi(a)"]}
+      ],
+      "ordered_concepts": ["prerequisite", "primitive", "constant", "final_formula"],
+      "forbidden_terms": []
+    },
+    {
+      "id": "instagram_dark_mode_explanation",
+      "enabled": true,
+      "source_url": "https://www.instagram.com/p/DVqG5MnjDEV/",
+      "reference_artifact": "library/profiles/edwardbuilds/2026-03-09_DVqG5MnjDEV_perché-il-dark-mode-è-sopravvalutato-e-la-semplici.md",
+      "reference_status": "derived_from_legacy_output_not_source_verified",
+      "expected_content_kind": "explanation",
+      "min_document_chars": 650,
+      "require_transcript": true,
+      "require_visual": true,
+      "concepts": [
+        {"id": "half_support", "any_of": ["solo metà", "only half", "50%", "50 %"]},
+        {"id": "settings_12", "any_of": ["12%", "12 %"]},
+        {"id": "maintenance", "any_of": ["costo di manutenzione", "costi di manutenzione", "costs more to maintain"]},
+        {"id": "critical_flows", "any_of": ["flussi critici", "critical flows"]},
+        {"id": "clarity", "any_of": ["chiarezza", "clarity beats aesthetics"]}
+      ],
+      "ordered_concepts": ["half_support", "settings_12", "critical_flows", "clarity"],
+      "forbidden_terms": ["tutte le app hanno abbandonato il dark mode"]
+    },
+    {
+      "id": "instagram_bliss_narrative",
+      "enabled": true,
+      "source_url": "https://www.instagram.com/p/DXNM6Pfj8zy/",
+      "reference_artifact": "library/profiles/edwardbuilds/2026-04-16_DXNM6Pfj8zy_la-storia-dietro-lo-sfondo-di-windows-xp-bliss.md",
+      "reference_status": "derived_from_legacy_output_not_source_verified",
+      "expected_content_kind": "narrative",
+      "min_document_chars": 850,
+      "require_transcript": true,
+      "require_visual": true,
+      "concepts": [
+        {"id": "infestation", "any_of": ["infestazione", "infestation"]},
+        {"id": "photographer", "any_of": ["Charles O'Rear", "Charles O’Rear"]},
+        {"id": "corbis", "any_of": ["Corbis"]},
+        {"id": "microsoft", "any_of": ["Microsoft"]},
+        {"id": "insurance", "any_of": ["assicurazione", "insurance"]},
+        {"id": "release", "any_of": ["2001"]},
+        {"id": "reach", "any_of": ["un miliardo", "1 miliardo", "1 billion"]}
+      ],
+      "ordered_concepts": ["infestation", "photographer", "corbis", "microsoft", "insurance", "release", "reach"],
+      "forbidden_terms": ["fotografia commissionata da Microsoft"]
+    },
+    {
+      "id": "instagram_scroll_snapping_carousel",
+      "enabled": true,
+      "source_url": "https://www.instagram.com/p/C_-VCCwAVjk/",
+      "reference_artifact": "library/profiles/danielewebdesign/2024-09-16_C_-VCCwAVjk_scroll-snapping-nel-web-design-cosè-e-come-utilizz.md",
+      "reference_status": "derived_from_legacy_output_not_source_verified",
+      "expected_content_kind": "presentation",
+      "min_document_chars": 600,
+      "require_transcript": false,
+      "require_visual": true,
+      "concepts": [
+        {"id": "definition", "any_of": ["funzionalità CSS", "CSS"]},
+        {"id": "specific_positions", "any_of": ["posizioni specifiche", "sezioni specifiche"]},
+        {"id": "fluid_experience", "any_of": ["esperienza fluida"]},
+        {"id": "control", "any_of": ["maggiore controllo"]},
+        {"id": "mobile", "any_of": ["mobile-friendly", "dispositivi touch"]},
+        {"id": "selective_use", "any_of": ["non è adatto a tutti", "non adatto a tutti"]}
+      ],
+      "ordered_concepts": ["definition", "fluid_experience", "control", "mobile", "selective_use"],
+      "forbidden_terms": []
+    },
+    {
+      "id": "interview_coverage_gap",
+      "enabled": false,
+      "disabled_reason": "La libreria non contiene ancora un'intervista con domande e risposte integralmente trascritte e verificabili.",
+      "expected_content_kind": "interview"
+    }
+  ]
+}

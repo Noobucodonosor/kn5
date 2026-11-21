@@ -1,0 +1,12 @@
+yt-dlp[default]
+instaloader
+google-genai
+python-dotenv
+pyTelegramBotAPI
+flask
+gunicorn
+google-cloud-storage
+google-cloud-tasks
+apify-client
+requests
+gallery-dl
