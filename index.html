@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>KN5 — I tuoi video, finalmente leggibili</title>
-  <meta name="description" content="Trasforma video YouTube e Instagram in trascrizioni verbatim, OCR visivo e note Markdown Obsidian-friendly con Gemini Vertex AI.">
+  <meta name="description" content="Trasforma video YouTube e Instagram in trascrizioni verbatim, OCR visivo, manifest di verifica strutturale e note Markdown Obsidian-friendly con Gemini Vertex AI.">
   <meta property="og:title" content="KN5 — I tuoi video, finalmente leggibili">
-  <meta property="og:description" content="Video, trascrizione verbatim, OCR visivo e concetti in un unico spazio di lavoro.">
-  <meta property="og:image" content="https://raw.githubusercontent.com/Noobucodonosor/kn5/main/docs/preview/social-preview.png">
+  <meta property="og:description" content="Video, trascrizione verbatim, OCR visivo e manifest di verifica strutturale in un unico spazio di lavoro.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/Noobucodonosor/kn5/main/docs/preview/desktop.png">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="./styles.css">
 </head>
@@ -23,15 +23,15 @@
       <button class="new" id="btn-new" type="button">＋ Nuova analisi</button>
       <nav>
         <p class="eyebrow">Spazio di lavoro</p>
-        <a class="on" href="#libreria">◫ Libreria <b>128</b></a>
+        <a class="on" href="#libreria">◫ Libreria <b>3</b></a>
         <a href="#libreria">◷ In elaborazione <b>0</b></a>
         <a href="#concetti">✦ Concetti</a>
       </nav>
       <nav>
         <p class="eyebrow">Raccolte</p>
-        <a href="#libreria"><i class="coral"></i>Matematica <b>8</b></a>
-        <a href="#libreria"><i class="violet"></i>Marketing &amp; SEO <b>96</b></a>
-        <a href="#libreria"><i class="mint"></i>Web design <b>24</b></a>
+        <a href="#libreria"><i class="coral"></i>Matematica <b>1</b></a>
+        <a href="#libreria"><i class="violet"></i>Product &amp; Design <b>1</b></a>
+        <a href="#libreria"><i class="mint"></i>Storia Tech <b>1</b></a>
       </nav>
       <div class="budget">
         <div><span>Budget mensile</span><b>$4,82 / $20</b></div>
@@ -46,7 +46,7 @@
           <p class="eyebrow">Libreria</p>
           <h1>I tuoi video,<br>finalmente leggibili.</h1>
         </div>
-        <small>128 elementi</small>
+        <small id="lib-count">3 pacchetti verificati</small>
       </div>
       <div class="ingest">
         <span>↗</span>
@@ -54,13 +54,13 @@
         <button id="btn-analyze" type="button">Analizza</button>
       </div>
       <div id="demo-notice" class="demo-note" style="display:none">
-        <b>Anteprima interattiva pubblica:</b> l'elaborazione live con Gemini Vertex AI richiede il backend KN5 configurato con credenziali GCP. Esplora liberamente il documento completo, la trascrizione sincronizzata e l'OCR qui a fianco oppure consulta il <a href="https://github.com/Noobucodonosor/kn5" target="_blank" rel="noopener" style="color:#23483c;font-weight:700">repository GitHub</a>.
+        <b>Anteprima interattiva pubblica:</b> per estrarre URL live con il pool AI gratuito apri il <a href="https://noobucodonosor-hub-664856461640.us-central1.run.app/?app=kn5" target="_blank" rel="noopener" style="color:#23483c;font-weight:700">Playground Live KN5 sull'Hub</a> oppure consulta il <a href="https://github.com/Noobucodonosor/kn5" target="_blank" rel="noopener" style="color:#23483c;font-weight:700">repository GitHub</a>.
       </div>
       <div class="filters" id="filters">
         <button class="on" data-filter="all" type="button">Tutti</button>
         <button data-filter="youtube" type="button">YouTube</button>
         <button data-filter="instagram" type="button">Instagram</button>
-        <button data-filter="long" type="button">Video lunghi</button>
+        <button data-filter="long" type="button">Approfondimenti</button>
       </div>
       <div id="items-list"></div>
     </section>
@@ -68,179 +68,185 @@
     <article class="reader">
       <div class="readerHead">
         <div>
-          <p class="eyebrow">Matematica · 26 aprile 2026</p>
-          <h2>Formula di Newton–Leibniz per il calcolo degli integrali definiti</h2>
+          <p class="eyebrow" id="reader-eyebrow"></p>
+          <h2 id="reader-title"></h2>
         </div>
-        <a href="https://www.youtube.com/watch?v=1OooVY-k1Dc" target="_blank" rel="noopener" title="Apri video originale">↗</a>
+        <a id="reader-source-link" href="#" target="_blank" rel="noopener" title="Apri fonte originale">↗</a>
       </div>
-      <div class="meta">
-        <span>Tonino Filardi</span>
-        <span>8 min</span>
-        <span>Italiano</span>
-        <span>✓ Documento completo</span>
-      </div>
+      <div class="meta" id="reader-meta"></div>
       <div class="tabs" id="tabs">
         <button class="on" data-tab="doc" type="button">Documento completo</button>
         <button data-tab="transcript" type="button">Trascrizione verbatim</button>
         <button data-tab="visual" type="button">OCR + visivo</button>
+        <button data-tab="manifest" type="button">Manifest verifica</button>
       </div>
       <div id="video-wrap" class="video sourceVideo" style="display:none">
-        <iframe id="yt-frame" src="https://www.youtube.com/embed/1OooVY-k1Dc?start=0" title="Formula di Newton-Leibniz" allowfullscreen></iframe>
+        <iframe id="yt-frame" src="" title="Video sorgente" allowfullscreen></iframe>
       </div>
       <div id="tab-content"></div>
     </article>
   </div>
 </main>
 <script>
-const segments = [
-  ['00:00', 0, 'Ciao a tutti. Oggi vediamo la formula di Newton–Leibniz, che ci servirà per risolvere un integrale definito.'],
-  ['00:25', 25, 'Noi sappiamo che la derivata della funzione integrale è uguale alla funzione integranda.'],
-  ['01:41', 101, "La funzione integranda è data dalla derivata della primitiva. Detta φ(x) la primitiva di f(x), φ'(x) deve essere uguale a f(x)."],
-  ['02:51', 171, 'Due funzioni che hanno la stessa derivata differiscono per una costante additiva.'],
-  ['04:37', 277, 'Quando i due estremi di integrazione coincidono, l’integrale si annulla.'],
-  ['06:47', 407, 'Otteniamo così la formula di Newton–Leibniz: l’integrale da a a b è uguale a φ(b) meno φ(a).'],
-  ['07:39', 459, 'La formula ci permette di calcolare direttamente un integrale definito attraverso una qualunque primitiva.']
-];
+const FALLBACK_DATA = {"version":"1.0","samples":[{"id":"youtube_newton_leibniz_tutorial","title":"Formula di Newton–Leibniz","full_title":"Formula di Newton–Leibniz per il calcolo degli integrali definiti","eyebrow":"Matematica · 26 aprile 2026","meta":"YouTube · Tonino Filardi","author":"Tonino Filardi","dur":"08:34","duration_label":"8 min","language":"Italiano","src":"youtube","long":false,"content_kind":"tutorial","source_url":"https://www.youtube.com/watch?v=1OooVY-k1Dc","embed_url":"https://www.youtube.com/embed/1OooVY-k1Dc","objective":"Derivare la formula che permette di calcolare un integrale definito attraverso una primitiva della funzione integranda.","prerequisite":"Il teorema fondamentale del calcolo integrale: se F è la funzione integrale di f, allora F′(x) = f(x).","steps":["Si definisce φ(x) come una qualunque primitiva di f(x), quindi φ′(x) = f(x).","F(x) e φ(x) hanno la stessa derivata. Differiscono quindi per una costante: F(x) = φ(x) + k.","Si valuta in x = a. Per definizione F(a) = ∫ₐᵃ f(t)dt = 0.","Da 0 = φ(a) + k si ricava k = −φ(a).","Si sostituisce la costante: F(x) = φ(x) − φ(a).","Si valuta in x = b e si ottiene ∫ₐᵇ f(x)dx = φ(b) − φ(a)."],"result_formula":"∫ₐᵇ f(x)dx = φ(b) − φ(a)","result_note":"Trova una qualunque primitiva e calcolane la differenza agli estremi. La costante additiva si elide.","synthesis_note":"La spiegazione orale stabilisce il collegamento logico tra derivazione e integrazione. La lavagna conferma ogni trasformazione tramite le formule scritte progressivamente.","tags":["Teorema fondamentale","Funzione primitiva","Integrale definito","Costante di integrazione"],"segments":[["00:00",0,"Ciao a tutti. Oggi vediamo la formula di Newton–Leibniz, che ci servirà per risolvere un integrale definito."],["00:25",25,"Noi sappiamo che la derivata della funzione integrale è uguale alla funzione integranda."],["01:41",101,"La funzione integranda è data dalla derivata della primitiva. Detta φ(x) la primitiva di f(x), φ'(x) deve essere uguale a f(x)."],["02:51",171,"Due funzioni che hanno la stessa derivata differiscono per una costante additiva."],["04:37",277,"Quando i due estremi di integrazione coincidono, l’integrale si annulla."],["06:47",407,"Otteniamo così la formula di Newton–Leibniz: l’integrale da a a b è uguale a φ(b) meno φ(a)."],["07:39",459,"La formula ci permette di calcolare direttamente un integrale definito attraverso una qualunque primitiva."]],"ocr_lines":["F′(x) = f(x)","φ′(x) = f(x)","F(x) = φ(x) + k","F(a) = ∫ₐᵃ f(x)dx = 0","k = −φ(a)","∫ₐᵇ f(x)dx = φ(b) − φ(a)"],"visual_description":"Il docente si trova davanti a una lavagna nera e costruisce la dimostrazione cancellando e riscrivendo le formule in sequenza algebrica.","document_markdown":"# Formula di Newton–Leibniz per il calcolo degli integrali definiti\n\n## Obiettivo del tutorial\nDerivare la formula che permette di calcolare un integrale definito attraverso una primitiva della funzione integranda.\n\n## Prerequisito\nIl teorema fondamentale del calcolo integrale: se F è la funzione integrale di f, allora F′(x) = f(x).\n\n## Procedura completa\n1. Si definisce φ(x) come una qualunque primitiva di f(x), quindi φ′(x) = f(x).\n2. F(x) e φ(x) hanno la stessa derivata: F(x) = φ(x) + k.\n3. In x = a vale F(a) = ∫ₐᵃ f(t)dt = 0, da cui k = −φ(a).\n4. In x = b si ottiene ∫ₐᵇ f(x)dx = φ(b) − φ(a).\n","manifest":{"package_version":"1.0","content_kind":"tutorial","artifacts":{"document":"document.md","transcript":"transcript.md","visual":"visual.md"},"verification":{"scope":"structural","semantic_equivalence":"not_verified","segments_total":7,"segments_covered":7,"audio_evidence_present":true,"visual_evidence_present":true,"timestamps_monotonic":true},"generator":{"model":"gemini-2.5-flash","cost_usd":0.0042}}},{"id":"instagram_dark_mode_explanation","title":"Perché il Dark Mode è sopravvalutato","full_title":"Perché il Dark Mode è sopravvalutato nei prodotti SaaS B2B e la chiarezza batte l'estetica","eyebrow":"Product Design · 9 marzo 2026","meta":"Instagram · Edward Builds","author":"Edward Builds","dur":"01:26","duration_label":"1 min","language":"Italiano","src":"instagram","long":false,"content_kind":"explanation","source_url":"https://www.instagram.com/p/DVqG5MnjDEV/","embed_url":"","objective":"Spiegare perché implementare il dark mode troppo presto raddoppia il costo di manutenzione del design system senza migliorare i flussi critici.","prerequisite":"Gestione di token colore semantici, contrasto tipografico e QA visivo su componenti data-dense.","steps":["Solo metà degli utenti che chiedono il dark mode lo mantiene attivo sui tool di lavoro quotidiani (50%).","Meno del 12% degli utenti apre le impostazioni del tema dopo il primo onboarding.","Ogni nuovo stato (hover, focus, alert, badge, tabella) raddoppia il costo di manutenzione e testing QA.","Nei flussi critici ad alta densità informativa, la chiarezza e la gerarchia su fondo chiaro battono l'estetica dark."],"result_formula":"Chiarezza > Doppio Tema prematuro","result_note":"Investi prima sulla leggibilità dei flussi critici; introduci un secondo tema solo quando il design system è stabile.","synthesis_note":"Il reel confronta metriche reali di adozione (50% uso effettivo, 12% apertura impostazioni) con gli screenshot di tabelle B2B rotte da contrasti dark improvvisati.","tags":["Design System","Dark Mode","Costo di manutenzione","Flussi critici"],"segments":[["00:00",0,"Tutti chiedono il dark mode nei commenti, ma solo metà lo usa davvero ogni giorno."],["00:19",19,"Nei nostri dati meno del 12% degli utenti tocca le impostazioni del tema dopo la prima settimana."],["00:44",44,"In compenso ogni componente, badge e grafico costa il doppio in manutenzione e QA."],["01:08",68,"Sui flussi critici la chiarezza batte sempre l'estetica: sistema prima la gerarchia su un solo tema."]],"ocr_lines":["50% adoption vs requests","12% open theme settings","2x maintenance cost per component","Clarity beats aesthetics on critical flows"],"visual_description":"Sequenza rapida di card comparative: a sinistra una tabella finanziaria leggibile su sfondo chiaro, a destra stati di errore e bordi illeggibili su dark mode non testato.","document_markdown":"# Perché il Dark Mode è sopravvalutato nei prodotti SaaS B2B\n\n## Tesi centrale\nImplementare il dark mode prima di aver stabilizzato i flussi critici aumenta i costi di manutenzione senza impatto reale sulla ritenzione.\n\n## Evidenze quantitative\n1. Solo metà (50%) di chi lo richiede lo usa stabilmente.\n2. Il 12% apre le impostazioni del tema.\n3. Il costo di manutenzione di token e stati UI raddoppia.\n4. Nei flussi critici la chiarezza batte l'estetica.\n","manifest":{"package_version":"1.0","content_kind":"explanation","artifacts":{"document":"document.md","transcript":"transcript.md","visual":"visual.md"},"verification":{"scope":"structural","semantic_equivalence":"not_verified","segments_total":4,"segments_covered":4,"audio_evidence_present":true,"visual_evidence_present":true,"timestamps_monotonic":true},"generator":{"model":"gemini-2.5-flash","cost_usd":0.0019}}},{"id":"instagram_bliss_narrative","title":"La storia dietro lo sfondo Bliss di Windows XP","full_title":"Come un'infestazione di fillossera in Napa Valley ha creato la fotografia più vista della storia (Bliss, Windows XP)","eyebrow":"Storia della Tecnologia · 16 aprile 2026","meta":"Instagram · Edward Builds","author":"Edward Builds","dur":"02:14","duration_label":"2 min","language":"Italiano","src":"instagram","long":true,"content_kind":"narrative","source_url":"https://www.instagram.com/p/DXNM6Pfj8zy/","embed_url":"","objective":"Ricostruire la catena storica verificabile dietro lo scatto originale di Charles O'Rear del 1996 e l'acquisizione da parte di Microsoft per Windows XP (2001).","prerequisite":"Nessun prerequisito tecnico; caso di studio su licensing fotografico e distribuzione software di massa.","steps":["Anni '90: un'infestazione di fillossera costringe a espiantare i vigneti su una collina di Sonoma/Napa Valley, lasciando un prato verde intatto.","Gennaio 1996: il fotografo Charles O'Rear scatta la foto su pellicola medio formato Mamiya RZ67 senza ritocco digitale.","O'Rear carica lo scatto sull'agenzia Corbis (fondata da Bill Gates).","Nel 2000–2001 Microsoft acquista i diritti completi per la campagna di Windows XP.","Il valore assicurativo della pellicola originale è così alto che i corrieri rifiutano la spedizione: O'Rear porta il negativo a Seattle in aereo di persona.","Dal rilascio di Windows XP nel 2001, lo scatto viene visto da oltre 1 miliardo di persone."],"result_formula":"1996 Pellicola Mamiya RZ67 → Corbis → Windows XP (2001, >1 miliardo di utenti)","result_note":"Lo scatto non fu commissionato da Microsoft né modificato in digitale: nacque da una pausa temporanea dei vigneti dopo l'infestazione.","synthesis_note":"La narrazione unisce fatti agronomici (infestazione di fillossera), dettagli fotografici (pellicola Fujifilm Velvia su Mamiya RZ67) e logistica di consegna del negativo originale.","tags":["Windows XP","Charles O'Rear","Corbis","Microsoft","Storia Tech"],"segments":[["00:00",0,"La collina più famosa del mondo non doveva nemmeno essere un prato: era un vigneto distrutto da un'infestazione."],["00:28",28,"Nel gennaio 1996 Charles O'Rear passa di lì e scatta su pellicola medio formato, zero Photoshop."],["00:58",58,"Carica la foto su Corbis; anni dopo Microsoft la sceglie per il lancio di Windows XP nel 2001."],["01:32",92,"Nessun corriere voleva coprire l'assicurazione del negativo originale, così O'Rear prese un volo per portarlo a mano."],["01:56",116,"Da quel momento oltre un miliardo di persone ha visto quella collina accendendo il computer."]],"ocr_lines":["Sonoma County, 1996 — Phylloxera infestation","Charles O'Rear · Mamiya RZ67 (no digital edit)","Licensed via Corbis -> Microsoft Windows XP (2001)","Courier insurance limit exceeded -> hand-delivered to Seattle","1+ billion viewers worldwide"],"visual_description":"Confronto tra la collina verde del 1996 su pellicola Velvia e la stessa collina tornata a vigneto anni dopo, seguito da inquadrature della fotocamera Mamiya RZ67.","document_markdown":"# La storia dietro lo sfondo Bliss di Windows XP\n\n## Cronologia verificata\n1. Un'infestazione di fillossera porta all'espianto temporaneo dei vigneti.\n2. Charles O'Rear scatta la fotografia nel 1996 su medio formato e la carica su Corbis.\n3. Microsoft acquisisce lo scatto per Windows XP (2001).\n4. Per limiti di assicurazione dei corrieri, O'Rear consegna il negativo di persona.\n5. Oltre un miliardo di persone ha visto lo scatto.\n","manifest":{"package_version":"1.0","content_kind":"narrative","artifacts":{"document":"document.md","transcript":"transcript.md","visual":"visual.md"},"verification":{"scope":"structural","semantic_equivalence":"not_verified","segments_total":5,"segments_covered":5,"audio_evidence_present":true,"visual_evidence_present":true,"timestamps_monotonic":true},"generator":{"model":"gemini-2.5-flash","cost_usd":0.0027}}}]};
+let samples = FALLBACK_DATA.samples;
+let state = { query: '', filter: 'all', tab: 'doc', activeId: samples[0].id, activeSeg: '00:00' };
 
-const items = [
-  { title: 'Formula di Newton–Leibniz', meta: 'YouTube · Tonino Filardi', dur: '08:34', src: 'youtube', long: false },
-  { title: 'Legge di Ohm: dimostrazione', meta: 'YouTube · Tonino Filardi', dur: '11:20', src: 'youtube', long: true },
-  { title: 'SEO nell’era dell’AI', meta: 'Instagram · Edward Builds', dur: '01:26', src: 'instagram', long: false }
-];
+function escapeHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
 
-const llmReadyMarkdown = `# Formula di Newton–Leibniz per il calcolo degli integrali definiti
-
-## Obiettivo del tutorial
-Derivare la formula che permette di calcolare un integrale definito attraverso una primitiva della funzione integranda.
-
-## Prerequisito
-Il teorema fondamentale del calcolo integrale: se F è la funzione integrale di f, allora F′(x) = f(x).
-
-## Procedura completa
-1. Si definisce φ(x) come una qualunque primitiva di f(x), quindi φ′(x) = f(x).
-2. F(x) e φ(x) hanno la stessa derivata. Due funzioni con la stessa derivata differiscono per una costante: F(x) = φ(x) + k.
-3. Si valuta la relazione in x = a. Per definizione F(a) = ∫ₐᵃ f(t)dt = 0.
-4. Da 0 = φ(a) + k si ricava k = −φ(a).
-5. Si sostituisce la costante: F(x) = φ(x) − φ(a).
-6. Si valuta in x = b: F(b) = φ(b) − φ(a).
-7. Poiché F(b) = ∫ₐᵇ f(t)dt, si ottiene ∫ₐᵇ f(x)dx = φ(b) − φ(a).
-
-## Risultato
-La formula di Newton–Leibniz collega integrale definito e integrale indefinito. Per calcolare ∫ₐᵇ f(x)dx si trova una qualunque primitiva φ di f e si calcola φ(b) − φ(a).
-
-## Informazioni estratte dalla componente visiva
-Il docente scrive progressivamente sulla lavagna: F′(x) = f(x); φ′(x) = f(x); F(x) = φ(x) + k; F(a) = ∫ₐᵃ f(x)dx = 0; k = −φ(a); ∫ₐᵇ f(x)dx = φ(b) − φ(a).
-
-## Concetti chiave
-- Teorema fondamentale del calcolo integrale
-- Funzione integrale e funzione primitiva
-- Costante di integrazione
-- Formula di Newton–Leibniz
-
-## Fonte
-https://www.youtube.com/watch?v=1OooVY-k1Dc`;
-
-let state = { query: '', filter: 'all', tab: 'doc', activeSeg: '00:00' };
+function getActiveItem() {
+  return samples.find(s => s.id === state.activeId) || samples[0];
+}
 
 function renderItems() {
   const q = state.query.toLowerCase();
-  const list = items.filter(i => {
-    if (q && !i.title.toLowerCase().includes(q) && !i.meta.toLowerCase().includes(q)) return false;
+  const list = samples.filter(i => {
+    if (q && !i.title.toLowerCase().includes(q) && !i.meta.toLowerCase().includes(q) && !i.full_title.toLowerCase().includes(q)) return false;
     if (state.filter === 'youtube' && i.src !== 'youtube') return false;
     if (state.filter === 'instagram' && i.src !== 'instagram') return false;
     if (state.filter === 'long' && !i.long) return false;
     return true;
   });
   const container = document.getElementById('items-list');
-  container.innerHTML = list.map((i, idx) => `
-    <button class="item ${idx === 0 ? 'active' : ''}" type="button">
-      <span class="thumb"><i>▶</i><small>${i.dur}</small></span>
-      <span class="itemcopy"><strong>${i.title}</strong><small>${i.meta}</small></span>
+  container.innerHTML = list.map(i => `
+    <button class="item ${i.id === state.activeId ? 'active' : ''}" data-id="${escapeHtml(i.id)}" type="button">
+      <span class="thumb"><i>▶</i><small>${escapeHtml(i.dur)}</small></span>
+      <span class="itemcopy"><strong>${escapeHtml(i.title)}</strong><small>${escapeHtml(i.meta)}</small></span>
       <b>›</b>
     </button>
   `).join('');
+
+  container.querySelectorAll('button[data-id]').forEach(btn => {
+    btn.onclick = () => {
+      state.activeId = btn.dataset.id;
+      const item = getActiveItem();
+      state.activeSeg = item.segments?.[0]?.[0] || '00:00';
+      renderItems();
+      renderReader();
+    };
+  });
+}
+
+function renderReader() {
+  const item = getActiveItem();
+  document.getElementById('reader-eyebrow').textContent = item.eyebrow;
+  document.getElementById('reader-title').textContent = item.full_title;
+  document.getElementById('reader-source-link').href = item.source_url;
+  document.getElementById('reader-meta').innerHTML = [
+    `<span>${escapeHtml(item.author)}</span>`,
+    `<span>${escapeHtml(item.duration_label)}</span>`,
+    `<span>${escapeHtml(item.language)}</span>`,
+    `<span>✓ Verifica strutturale (${escapeHtml(item.content_kind)})</span>`
+  ].join('');
+  renderTab();
 }
 
 function renderTab() {
+  const item = getActiveItem();
   const videoWrap = document.getElementById('video-wrap');
+  const ytFrame = document.getElementById('yt-frame');
   const content = document.getElementById('tab-content');
-  videoWrap.style.display = state.tab === 'doc' ? 'none' : 'block';
+
+  if (state.tab === 'transcript' && item.embed_url) {
+    videoWrap.style.display = 'block';
+    if (!ytFrame.src.startsWith(item.embed_url)) {
+      ytFrame.src = item.embed_url + '?start=0';
+    }
+  } else {
+    videoWrap.style.display = 'none';
+  }
 
   if (state.tab === 'doc') {
     content.innerHTML = `
       <section class="fullDocument">
         <div class="documentTools">
-          <span><b>OUTPUT KN5</b><small>Markdown strutturato · pronto per LLM</small></span>
+          <span><b>OUTPUT KN5 · ${escapeHtml(item.content_kind.toUpperCase())}</b><small>Markdown strutturato · pronto per Obsidian e LLM</small></span>
           <div>
             <button id="btn-copy" type="button">Copia tutto</button>
             <button id="btn-dl" type="button">Scarica .md</button>
           </div>
         </div>
-        <h3>Obiettivo del tutorial</h3>
-        <p>Derivare la formula che permette di calcolare un integrale definito attraverso una primitiva della funzione integranda.</p>
-        <h3>Prerequisito</h3>
-        <p>Il teorema fondamentale del calcolo integrale: se <i>F</i> è la funzione integrale di <i>f</i>, allora <b>F′(x) = f(x)</b>.</p>
-        <h3>Procedura completa</h3>
+        <h3>Obiettivo</h3>
+        <p>${escapeHtml(item.objective)}</p>
+        <h3>Prerequisito / Contesto</h3>
+        <p>${escapeHtml(item.prerequisite)}</p>
+        <h3>Passaggi chiave verificati</h3>
         <ol>
-          <li>Si definisce <b>φ(x)</b> come una qualunque primitiva di f(x), quindi φ′(x) = f(x).</li>
-          <li>F(x) e φ(x) hanno la stessa derivata. Differiscono quindi per una costante: <b>F(x) = φ(x) + k</b>.</li>
-          <li>Si valuta in x = a. Per definizione <b>F(a) = ∫ₐᵃ f(t)dt = 0</b>.</li>
-          <li>Da 0 = φ(a) + k si ricava <b>k = −φ(a)</b>.</li>
-          <li>Si sostituisce la costante: <b>F(x) = φ(x) − φ(a)</b>.</li>
-          <li>Si valuta in x = b e si ottiene <b>∫ₐᵇ f(x)dx = φ(b) − φ(a)</b>.</li>
+          ${item.steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}
         </ol>
         <div class="resultBox">
-          <small>RISULTATO OPERATIVO</small>
-          <strong>∫ₐᵇ f(x)dx = φ(b) − φ(a)</strong>
-          <p>Trova una qualunque primitiva e calcolane la differenza agli estremi. La costante additiva non influenza il risultato.</p>
+          <small>SINTESI OPERATIVA</small>
+          <strong>${escapeHtml(item.result_formula)}</strong>
+          <p>${escapeHtml(item.result_note)}</p>
         </div>
-        <h3>Informazioni ricavate dal video</h3>
-        <p>La spiegazione orale stabilisce il collegamento logico tra derivazione e integrazione. La lavagna conferma ogni trasformazione tramite le formule scritte progressivamente. Il documento combina entrambe le fonti, senza limitarsi alla sola trascrizione.</p>
+        <h3>Integrazione audio + componente visiva</h3>
+        <p>${escapeHtml(item.synthesis_note)}</p>
         <h3 id="concetti">Concetti chiave</h3>
         <div class="docTags">
-          <span>Teorema fondamentale</span>
-          <span>Funzione primitiva</span>
-          <span>Integrale definito</span>
-          <span>Costante di integrazione</span>
+          ${item.tags.map(t => `<span>${escapeHtml(t)}</span>`).join('')}
         </div>
       </section>`;
     document.getElementById('btn-copy').onclick = async (e) => {
-      await navigator.clipboard.writeText(llmReadyMarkdown);
+      await navigator.clipboard.writeText(item.document_markdown);
       e.target.textContent = '✓ Copiato';
       setTimeout(() => { e.target.textContent = 'Copia tutto'; }, 1800);
     };
     document.getElementById('btn-dl').onclick = () => {
-      const blob = new Blob([llmReadyMarkdown], { type: 'text/markdown' });
+      const blob = new Blob([item.document_markdown], { type: 'text/markdown' });
       const href = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = href; a.download = 'newton-leibniz-kn5.md'; a.click();
+      a.href = href; a.download = item.id + '.md'; a.click();
       URL.revokeObjectURL(href);
     };
   } else if (state.tab === 'transcript') {
     content.innerHTML = `
       <div class="transcript">
-        <p class="sourceNote">Testo letterale dell’audio, conservato separatamente dal documento elaborato. Clicca un timestamp per saltare al punto nel video.</p>
-        ${segments.map(s => `
-          <button class="${state.activeSeg === s[0] ? 'on' : ''}" data-ts="${s[0]}" data-sec="${s[1]}" type="button">
-            <time>${s[0]}</time><p>${s[2]}</p>
+        <p class="sourceNote">Testo letterale dell’audio (<code>transcript.md</code>), conservato separatamente dal documento elaborato.</p>
+        ${item.segments.map(s => `
+          <button class="${state.activeSeg === s[0] ? 'on' : ''}" data-ts="${escapeHtml(s[0])}" data-sec="${Number(s[1])}" type="button">
+            <time>${escapeHtml(s[0])}</time><p>${escapeHtml(s[2])}</p>
           </button>
         `).join('')}
       </div>`;
     content.querySelectorAll('button[data-ts]').forEach(btn => {
       btn.onclick = () => {
         state.activeSeg = btn.dataset.ts;
-        document.getElementById('yt-frame').src = `https://www.youtube.com/embed/1OooVY-k1Dc?start=${btn.dataset.sec}`;
+        if (item.embed_url) {
+          ytFrame.src = item.embed_url + '?start=' + btn.dataset.sec;
+        }
         renderTab();
       };
     });
-  } else {
+  } else if (state.tab === 'visual') {
     content.innerHTML = `
       <section class="visualSource">
-        <p class="sourceNote">Informazioni presenti nel video ma non necessariamente pronunciate.</p>
-        <h3>Testo rilevato sulla lavagna</h3>
-        <code>F′(x) = f(x)<br>φ′(x) = f(x)<br>F(x) = φ(x) + k<br>F(a) = ∫ₐᵃ f(x)dx = 0<br>k = −φ(a)<br>∫ₐᵇ f(x)dx = φ(b) − φ(a)</code>
+        <p class="sourceNote">Evidenze estratte dai frame visivi (<code>visual.md</code>) e conservate separatamente dal parlato.</p>
+        <h3>Testo OCR rilevato sullo schermo</h3>
+        <code>${item.ocr_lines.map(escapeHtml).join('<br>')}</code>
         <h3>Descrizione visiva</h3>
-        <p>Il docente si trova davanti a una lavagna nera e costruisce la dimostrazione cancellando e riscrivendo le formule. La sequenza visiva rende espliciti i passaggi algebrici e l’ordine della derivazione.</p>
+        <p>${escapeHtml(item.visual_description)}</p>
+      </section>`;
+  } else if (state.tab === 'manifest') {
+    const m = item.manifest;
+    const v = m.verification;
+    content.innerHTML = `
+      <section class="visualSource">
+        <p class="sourceNote">Contratto di verifica del pacchetto (<code>manifest.json</code>): certifica la completezza strutturale senza dichiarare equivalenza semantica automatica.</p>
+        <div class="resultBox">
+          <small>CONTRATTO DI VERIFICA</small>
+          <strong>scope: ${escapeHtml(v.scope)} · semantic_equivalence: ${escapeHtml(v.semantic_equivalence)}</strong>
+          <p>Segmenti verificati: ${v.segments_covered}/${v.segments_total} · Evidenza audio: ${v.audio_evidence_present ? '✓' : '✗'} · Evidenza visiva: ${v.visual_evidence_present ? '✓' : '✗'} · Timestamp monotoni: ${v.timestamps_monotonic ? '✓' : '✗'}</p>
+        </div>
+        <h3>Artefatti del pacchetto</h3>
+        <code>document: ${escapeHtml(m.artifacts.document)}<br>transcript: ${escapeHtml(m.artifacts.transcript)}<br>visual: ${escapeHtml(m.artifacts.visual)}<br>model: ${escapeHtml(m.generator.model)} (costo stimato: $${m.generator.cost_usd})</code>
+        <h3>JSON completo (manifest.json)</h3>
+        <code>${escapeHtml(JSON.stringify(m, null, 2)).replace(/\n/g, '<br>')}</code>
       </section>`;
   }
 }
@@ -268,8 +274,19 @@ document.getElementById('tabs').querySelectorAll('button').forEach(btn => {
   };
 });
 
-renderItems();
-renderTab();
+fetch('./samples.json')
+  .then(r => r.ok ? r.json() : null)
+  .then(data => {
+    if (data && Array.isArray(data.samples) && data.samples.length) {
+      samples = data.samples;
+      state.activeId = samples[0].id;
+    }
+  })
+  .catch(() => {})
+  .finally(() => {
+    renderItems();
+    renderReader();
+  });
 </script>
 </body>
 </html>
