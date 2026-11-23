@@ -99,7 +99,9 @@ def main() -> int:
     if root_secrets:
         errors.append(f"Possibili segreti nei candidati root ({len(root_secrets)} file)")
 
-    if not (SITE / ".git").is_dir():
+    if not SITE.exists():
+        warnings.append("kn5-site non presente in locale (clone standalone/CI)")
+    elif not (SITE / ".git").is_dir():
         errors.append("kn5-site non è più riconosciuto come repository indipendente")
     else:
         site_files = candidate_files(SITE)
