@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kn5"
+version = "1.0.0"
+description = "Knowledge Ingestor AI: YouTube & Instagram to Obsidian-friendly Markdown notes with Gemini Vertex AI and BudgetTracker."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
