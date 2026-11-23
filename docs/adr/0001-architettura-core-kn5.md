@@ -3,7 +3,7 @@
 - **Stato:** Accettato
 - **Priorità:** P1 — Alta
 - **Data:** 2026-11-23
-- **Autori:** Dany (`Noobucodonosor`)
+- **Autori:** `Noobucodonosor`
 - **Fonti:** `README.md`, `AUTONOMY.md`, `src/skills/`, `evals/cases.json`
 
 ---

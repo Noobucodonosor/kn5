@@ -1,4 +1,4 @@
-# Dockerfile per DanyKnowledgeBot
+# Dockerfile per kn5-knowledge-bot
 
 FROM node:22-slim AS node_runtime
 

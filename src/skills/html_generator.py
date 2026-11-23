@@ -223,7 +223,7 @@ def generate_epistemic_html(
     <textarea id="ai-markdown" class="hidden">{ai_markdown}</textarea>
 
     <footer class="max-w-4xl mx-auto px-6 mt-16 pt-8 border-t border-slate-800/80 text-center text-slate-500 text-xs">
-        Dati generati e pronti per l'importazione AI &bull; DanyKnowledgeBot
+        Dati generati e pronti per l'importazione AI &bull; kn5
     </footer>
 
     <!-- Script per copiare il testo -->
